@@ -6,7 +6,7 @@ const Pricing = () => {
             <Navbar></Navbar>
             <h2 className="text-4xl font-bold text-blue-400 text-center mt-20 mb-16">Choose Your Task Nestle Plan</h2>
             <div className="flex flex-col items-center md:flex-row gap-7 mx-2 md:mx-20">
-                <div className="border p-10 my-4">
+                <div className="border md:h-[600px] p-10 my-4">
                     <h2 className="text-3xl font-bold">Basic</h2>
                     <p className="mt-3">Core task management features for single users</p>
                     <h2 className="mt-4 text-3xl font-bold">Free</h2>
@@ -18,7 +18,7 @@ const Pricing = () => {
                     <p>Customizable project boards</p>
                     <p>Up to 5 collaborative notes.</p>
                 </div>
-                <div className="border p-10 my-4">
+                <div className="border md:h-[600px] p-10 my-4">
                     <h2 className="text-3xl font-bold">Pro</h2>
                     <p className="mt-3">Simple, collaborative task management for teams</p>
                     <h2 className="mt-4 text-3xl font-bold">$6</h2>
@@ -33,7 +33,7 @@ const Pricing = () => {
                     <p>Automations</p>
                     <p>Statistics and reports</p>
                 </div>
-                <div className="border border-blue-500 p-10 my-4">
+                <div className="border md:h-[600px] border-blue-500 p-10 my-4">
                     <h2 className="text-3xl font-bold text-blue-500">Business <div className="badge badge-secondary">Premium</div></h2>
                     <p className="mt-3">Extended collaboration features for teams</p>
                     <h2 className="mt-4 text-3xl font-bold">$12</h2>
@@ -47,7 +47,7 @@ const Pricing = () => {
                     <p>Security restrictions</p>
                     <p>priority email and phone support</p>
                 </div>
-                <div className="border p-10 my-4">
+                <div className="border md:h-[600px] p-10 my-4">
                     <h2 className="text-3xl font-bold">Enterprise</h2>
                     <p className="mt-3">For companies with specific requirements</p>
                     <h2 className="mt-4 text-3xl font-bold">Custom</h2>
