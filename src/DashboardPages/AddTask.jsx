@@ -48,7 +48,7 @@ const AddTask = () => {
                         </div>
                         <textarea {...register('description')} className="textarea textarea-bordered h-24" placeholder="Description Here" required></textarea>
                     </label>
-                    <div className="flex items-center gap-6 mt-6">
+                    <div className="flex flex-col md:flex-row items-center gap-6 mt-6">
                         <label className="form-control">
                             <div className="label">
                                 <span className="label-text">Choose Deadline</span>

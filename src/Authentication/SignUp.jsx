@@ -10,9 +10,9 @@ import SocialLogin from "./SocialLogin";
 
 const SignUp = () => {
     const axiosPublic = useAxiosPublic();
+    const navigate = useNavigate();
 
     const { createUser, updateUserProfile } = useContext(AuthContext);
-    const navigate = useNavigate();
 
     const {
         register,
@@ -37,7 +37,7 @@ const SignUp = () => {
                             .then(res => {
                                 if (res.data.insertedId) {
                                     reset();
-                                    navigate('/');
+                                    navigate('/dashboard/addTask');
                                     Swal.fire({
                                         title: "Sign Up Successful!",
                                         text: "You are now successfully registered!",

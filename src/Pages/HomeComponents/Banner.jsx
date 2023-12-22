@@ -8,10 +8,10 @@ const Banner = () => {
                 <div className="hero-content flex-col">
                     <img className='w-2/3' src={bannerImg} />
                     <div className='flex flex-col items-center'>
-                        <h1 className="text-5xl text-center font-bold">Task Management Made Easy !</h1>
+                        <h1 className="text-2xl md:text-5xl text-center font-bold">Task Management Made Easy !</h1>
                         <p className="py-6 text-center">Handle your tasks and the tasks of your employees from one platform. Accomplish the hardest tasks in the best possible way.</p>
                         <Link to='/login'>
-                            <button className="btn text-2xl btn-outline text-blue-400">Let&apos;s Explore!</button>
+                            <button className="btn text-md md:text-2xl btn-outline text-blue-400">Let&apos;s Explore!</button>
                         </Link>
                     </div>
                 </div>

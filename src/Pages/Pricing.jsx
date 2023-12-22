@@ -5,7 +5,7 @@ const Pricing = () => {
         <div>
             <Navbar></Navbar>
             <h2 className="text-4xl font-bold text-blue-400 text-center mt-20 mb-16">Choose Your Task Nestle Plan</h2>
-            <div className="flex gap-7 mx-20">
+            <div className="flex flex-col items-center md:flex-row gap-7 mx-2 md:mx-20">
                 <div className="border p-10 my-4">
                     <h2 className="text-3xl font-bold">Basic</h2>
                     <p className="mt-3">Core task management features for single users</p>

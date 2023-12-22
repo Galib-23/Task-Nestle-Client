@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Providers/AuthProvider";
 import SocialLogin from "./SocialLogin";
@@ -8,8 +8,6 @@ const Login = () => {
 
     const { signIn } = useContext(AuthContext);
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = e => {
         e.preventDefault();
@@ -20,7 +18,7 @@ const Login = () => {
             .then(res => {
                 const user = res.user;
                 console.log(user);
-                navigate(from, { replace: true });
+                navigate('/dashboard/addTask');
                 Swal.fire({
                     title: "Login Successful!",
                     text: "You are now successfully logged in!",

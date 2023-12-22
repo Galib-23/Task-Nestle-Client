@@ -41,7 +41,7 @@ const ManageTasks = () => {
     const statuses = ["todo", "ongoing", "completed"];
 
     return (
-        <div className="flex gap-16">
+        <div className="flex flex-col md:flex-row gap-16">
             {statuses.map((status, index) =>
                 <Section
                     key={index}

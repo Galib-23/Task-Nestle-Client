@@ -9,7 +9,7 @@ import Window from "./HomeComponents/Window";
 
 const Home = () => {
     return (
-        <div className="md:container mx-auto">
+        <div className="md:container mx-2 md:mx-auto overflow-hidden">
             <Navbar></Navbar>
             <Banner></Banner>
             <Organized></Organized>
