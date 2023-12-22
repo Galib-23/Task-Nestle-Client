@@ -41,19 +41,22 @@ const ManageTasks = () => {
     const statuses = ["todo", "ongoing", "completed"];
 
     return (
-        <div className="flex flex-col md:flex-row gap-16">
-            {statuses.map((status, index) =>
-                <Section
-                    key={index}
-                    status={status}
-                    myTask={myTask}
-                    setMyTask={setMyTask}
-                    todos={todos}
-                    ongoing={ongoing}
-                    refetch={refetch}
-                    completed={completed}
-                />
-            )}
+        <div>
+            <h2 className="text-4xl mt-2 font-bold text-center mb-10">HELLO, {user?.displayName}!! Welcome Back</h2>
+            <div className="flex flex-col md:flex-row gap-16">
+                {statuses.map((status, index) =>
+                    <Section
+                        key={index}
+                        status={status}
+                        myTask={myTask}
+                        setMyTask={setMyTask}
+                        todos={todos}
+                        ongoing={ongoing}
+                        refetch={refetch}
+                        completed={completed}
+                    />
+                )}
+            </div>
         </div>
     );
 };
