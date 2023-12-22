@@ -45,7 +45,7 @@ const Navbar = () => {
                 {
                     user ?
                     <div className="flex gap-5 items-center">
-                        <Link to='/dashboard/myProfile'><button className="btn btn-accent btn-sm rounded-3xl">Dashboard</button></Link>
+                        <Link to='/dashboard/myTasks'><button className="btn btn-accent btn-sm rounded-3xl">Dashboard</button></Link>
                         <button onClick={handleLogOut} className="btn h-fit w-fit btn-outline btn-sm text-red-600">Logout</button>
                     </div>
                     :

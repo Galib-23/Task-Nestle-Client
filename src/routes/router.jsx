@@ -8,7 +8,6 @@ import Contact from "../Pages/Contact";
 import Login from "../Authentication/Login";
 import SignUp from "../Authentication/SignUp";
 import PrivateRoute from "./PrivateRoute";
-import Profile from "../DashboardPages/Profile";
 import ManageTasks from "../DashboardPages/ManageTasks";
 import Dashboard from "../Layout/Dashboard/Dashboard";
 import AddTask from "../DashboardPages/AddTask";
@@ -42,10 +41,6 @@ const router = createBrowserRouter([
         path: 'dashboard',
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children: [
-            {
-                path: 'myProfile',
-                element: <Profile></Profile>
-            },
             {
                 path: 'myTasks',
                 element: <ManageTasks></ManageTasks>

@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
+import useAxiosPublic, { axiosPublic } from "../Hooks/useAxiosPublic";
 import { AuthContext } from "../Providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
-
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import Swal from "sweetalert2";
+import { useDrag, useDrop } from "react-dnd";
 
 const ManageTasks = () => {
     const axiosPublic = useAxiosPublic();
@@ -16,12 +15,15 @@ const ManageTasks = () => {
             const res = await axiosPublic.get('/tasks');
             return res.data;
         }
-    })
-    const myTasks = tasks?.filter(task => task.createdBy === user?.email);
-    console.log("my tasks : ", myTasks);
+    });
 
-    const [myTask, setMyTask] = useState(myTasks);
+    // Use useEffect to update myTask when tasks data changes
+    useEffect(() => {
+        const myTasks = tasks?.filter(task => task.createdBy === user?.email);
+        setMyTask(myTasks || []);
+    }, [tasks, user]);
 
+    const [myTask, setMyTask] = useState([]);
     const [todos, setTodos] = useState([]);
     const [ongoing, setOngoing] = useState([]);
     const [completed, setCompleted] = useState([]);
@@ -31,10 +33,9 @@ const ManageTasks = () => {
         const fOngoing = myTask?.filter(task => task.status === "ongoing");
         const fCompleted = myTask?.filter(task => task.status === "completed");
 
-        setTodos(fTodos);
-        setOngoing(fOngoing);
-        setCompleted(fCompleted);
-
+        setTodos(fTodos || []);
+        setOngoing(fOngoing || []);
+        setCompleted(fCompleted || []);
     }, [myTask]);
 
     const statuses = ["todo", "ongoing", "completed"];
@@ -49,7 +50,9 @@ const ManageTasks = () => {
                     setMyTask={setMyTask}
                     todos={todos}
                     ongoing={ongoing}
-                    completed={completed}></Section>
+                    refetch={refetch}
+                    completed={completed}
+                />
             )}
         </div>
     );
@@ -58,7 +61,11 @@ const ManageTasks = () => {
 export default ManageTasks;
 
 
-const Section = ({ status, myTask, setMyTask, todos, ongoing, completed }) => {
+
+
+
+
+const Section = ({ status, myTask, setMyTask, todos, ongoing, completed, refetch }) => {
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: "task",
@@ -69,12 +76,12 @@ const Section = ({ status, myTask, setMyTask, todos, ongoing, completed }) => {
     }))
 
     let text = "todo";
-    let bg = "bg-slate-500"
+    let bg = "bg-blue-500"
     let tasksToMap = todos;
 
     if (status === "ongoing") {
         text = "Ongoing"
-        bg = "bg-purple-500"
+        bg = "bg-orange-500"
         tasksToMap = ongoing
     }
     if (status === "completed") {
@@ -83,18 +90,27 @@ const Section = ({ status, myTask, setMyTask, todos, ongoing, completed }) => {
         tasksToMap = completed
     }
 
-    const addItemToSection = (id) => {
+    const addItemToSection = async (id) => {
         console.log("droped", id);
         setMyTask((prev) => {
             const mTasks = prev?.map(t => {
-                if(t._id === id){
-                    return {...t, status: status}
+                if (t._id === id) {
+                    return { ...t, status: status }
                 }
-
                 return t;
             });
+
             return mTasks;
         })
+        const upTask = {
+            status: status
+        }
+        const upTaskRes = await axiosPublic.patch(`/task/${id}`, upTask);
+        console.log(upTaskRes.data);
+        if (upTaskRes.data.modifiedCount > 0) {
+            Swal.fire("Status Updated successfully!");
+            refetch();
+        }
     }
 
     return <div ref={drop} className={`w-64 rounded-md p-2 ${isOver ? "bg-slate-200" : ""}`}>
@@ -126,10 +142,32 @@ const Task = ({ task, myTask, setMyTask }) => {
     const handleRemove = (id) => {
         console.log(id);
 
-        //TODL:::::::::::
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosPublic.delete(`/tasks/${id}`)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                            const fTask = myTask?.filter(t => t._id !== id);
+                            setMyTask(fTask);
+                        }
+                    })
+            }
+        });
 
-        // const fTask = myTask?.filter(t => t._id !== id);
-        // setMyTask(fTask);
     }
     return (
         <div ref={drag} className={`relative p-2 mt-5 shadow-md rounded-lg cursor-grab ${isDragging ? "opacity-25" : "opacity-100"}`}>
@@ -137,7 +175,7 @@ const Task = ({ task, myTask, setMyTask }) => {
                 <h2 className="text-blue-500 text-xl font-semibold">{task.title}</h2>
                 <p className="mt-2">{task.description}</p>
                 <p className="text-xs mt-2">Deadline: {task.deadline}</p>
-                <button onClick={() => handleRemove(task._id)} className="btn btn-xs mt-3 btn-outline text-red-500">Remove</button>
+                <button onClick={() => handleRemove(task._id)} className="btn btn-xs mt-3 btn-outline text-red-500">Delete</button>
             </div>
         </div>
     );
