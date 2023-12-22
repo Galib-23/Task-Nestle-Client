@@ -33,6 +33,7 @@ const AddTask = () => {
     }
     return (
         <div>
+            <h2 className="text-center text-4xl font-bold">Add Task</h2>
             <div className="mx-2 md:mx-20 lg:mx-44">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <label className="form-control w-full mt-6">
